@@ -1,0 +1,17 @@
+def get_next_question(self, user_id):
+    if user_id not in self.user_data:
+        self.user_data[user_id] = {'current_question': 0, 'answers': []}
+
+    current_question_index = self.user_data[user_id]['current_question']
+    
+    if current_question_index < len(self.questions):
+        question = self.questions[current_question_index]
+        question_text = question['text']
+        
+        if question['type'] == 'multiple_choice':
+            options = "\n".join([f"{i}. {opt}" for i, opt in enumerate(question['options'])])
+            return f"{question_text}\n{options}"
+        else:
+            return question_text
+    else:
+        return self.generate_final_response(user_id)
