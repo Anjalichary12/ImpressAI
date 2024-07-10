@@ -1,0 +1,21 @@
+def generate_final_response(self, user_id):
+    if user_id not in self.user_data:
+        return "No quiz data found for the user."
+
+    answers = self.user_data[user_id]['answers']
+    score = 0
+
+    for i, answer in enumerate(answers):
+        if answer == self.questions[i]['correct_answer']:
+            score += 1
+
+    total_questions = len(self.questions)
+    response = f"Quiz completed! Your score is {score} out of {total_questions}."
+
+    # Optionally, provide feedback on each question
+    for i, answer in enumerate(answers):
+        correct = self.questions[i]['correct_answer']
+        feedback = "Correct!" if answer == correct else f"Wrong! The correct answer was {correct}."
+        response += f"\nQ{i + 1}: {feedback}"
+
+    return response
